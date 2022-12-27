@@ -24,6 +24,7 @@ import {StatusBar} from 'expo-status-bar';
 const ExpenseForm = ({route: {params}}: {route: {params: any}}) => {
   const {t} = useTranslation();
   const expense = params?.expense;
+  const updateExpense = params?.updateExpense;
   const categories = useQueryAuth.useQueryAuth(
     'categories',
     api.getCategories,
@@ -92,6 +93,19 @@ const ExpenseForm = ({route: {params}}: {route: {params: any}}) => {
       setSuccessMessage('');
     },
     onSuccess: (data) => {
+      const selectedCategory = categories.find(
+        (item) => item.id === categoryId,
+      );
+      const parsedImage = image?.uri ? image : {uri: image};
+      const newExpense = {
+        ...expense,
+        Category: selectedCategory,
+        amount,
+        producedDate: producedDate.toISOString(),
+        description,
+        image: parsedImage.uri,
+      };
+      updateExpense(newExpense);
       invalidateQueries(['expenses']);
       setErrorMessage('');
       setSuccessMessage('Expense modified successfully!');

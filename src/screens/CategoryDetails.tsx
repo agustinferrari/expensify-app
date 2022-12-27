@@ -53,7 +53,7 @@ const chartConfig = {
 
 const CategoryDetails = ({route: {params}}: {route: {params: any}}) => {
   const {assets, gradients, colors, sizes} = useTheme();
-  const category = params.category;
+  const [category, setCategory] = useState(params.category);
   const [openDialogBox, setDialogBoxOpen] = useState(false);
   const navigation = useNavigation();
   const {t} = useTranslation();
@@ -157,7 +157,10 @@ const CategoryDetails = ({route: {params}}: {route: {params: any}}) => {
                     marginBottom={sizes.base}
                     marginTop={10}
                     onPress={() => {
-                      navigation.navigate('CategoryForm', {category: category});
+                      navigation.navigate('CategoryForm', {
+                        category: category,
+                        updateCategory: setCategory,
+                      });
                     }}>
                     <View
                       style={{

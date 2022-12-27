@@ -20,6 +20,7 @@ import {StatusBar} from 'expo-status-bar';
 const CategoryForm = ({route: {params}}: {route: {params: any}}) => {
   const {t} = useTranslation();
   const category = params?.category;
+  const updateCategory = params?.updateCategory;
   const {assets, gradients, colors, sizes} = useTheme();
   const [name, setName] = useState(category ? category.name : '');
   const [monthlyBudget, setMonthlyBudget] = useState(
@@ -74,6 +75,15 @@ const CategoryForm = ({route: {params}}: {route: {params: any}}) => {
       setErrorMessage(error.response.data.message);
     },
     onSuccess: (data) => {
+      const parsedImage = image?.uri ? image : {uri: image};
+      const newCategory = {
+        ...category,
+        name,
+        monthlyBudget,
+        description,
+        image: parsedImage.uri,
+      };
+      updateCategory(newCategory);
       invalidateQueries(['categories']);
       setErrorMessage('');
       setSuccessMessage('Category updated successfully! ');
@@ -112,8 +122,7 @@ const CategoryForm = ({route: {params}}: {route: {params: any}}) => {
 
   return (
     <>
-      {' '}
-      <StatusBar style="dark" />{' '}
+      <StatusBar style="dark" />
       <Block
         color={colors.card}
         paddingTop={sizes.m}

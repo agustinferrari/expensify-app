@@ -17,7 +17,7 @@ import {StatusBar} from 'expo-status-bar';
 
 const ExpenseDetails = ({route: {params}}: {route: {params: any}}) => {
   const {assets, gradients, colors, sizes} = useTheme();
-  const expense = params.expense;
+  const [expense, setExpense] = useState(params.expense);
   const [openDialogBox, setDialogBoxOpen] = useState(false);
   const [openImageModal, setOpenImageModal] = useState(false);
   const navigation = useNavigation();
@@ -122,7 +122,7 @@ const ExpenseDetails = ({route: {params}}: {route: {params: any}}) => {
                   {`Produced date: ${parseDate(expense?.producedDate)}`}
                 </Text>
                 <Text p center white marginBottom={sizes.sm}>
-                  {`Registered date: ${parseDate(expense?.producedDate)}`}
+                  {`Registered date: ${parseDate(expense?.registeredDate)}`}
                 </Text>
                 {isAdmin && (
                   <Block>
@@ -131,7 +131,10 @@ const ExpenseDetails = ({route: {params}}: {route: {params: any}}) => {
                       marginBottom={sizes.base}
                       marginTop={10}
                       onPress={() => {
-                        navigation.navigate('ExpenseForm', {expense: expense});
+                        navigation.navigate('ExpenseForm', {
+                          expense: expense,
+                          updateExpense: setExpense,
+                        });
                       }}>
                       <View
                         style={{

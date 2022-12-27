@@ -7,7 +7,7 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import {AuthProvider} from './src/context/AuthContext';
 import {AlertProvider} from './src/context/AlertContext';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
+import {LogBox} from 'react-native';
 const queryClient = new QueryClient();
 
 export const invalidateQueries = (keys: any) => {
@@ -15,6 +15,8 @@ export const invalidateQueries = (keys: any) => {
 };
 
 export default function App() {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs(); //Ignore all log notifications
   return (
     <QueryClientProvider client={queryClient}>
       <DataProvider>
