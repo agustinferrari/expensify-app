@@ -23,9 +23,9 @@ Users can register their expenses , which will be shared with the entire family 
 
 ### Steps:
 ```
-git clone https://github.com/ORTISP/Expensify-App
-cd Expensify-Backend
-npm i
-npm run start
+git clone https://github.com/agustinferrari/expensify-app
+cd expensify-app
+yarn install
+yarn start
 ```
 
